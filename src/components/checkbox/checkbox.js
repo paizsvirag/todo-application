@@ -13,7 +13,6 @@ export default function Checkbox({disabled = false,checked,
             disabled={disabled}
             checked={checked}
             onChange={handler}
-            area-labelledby="checkbox-label"
         />
     )
 }
