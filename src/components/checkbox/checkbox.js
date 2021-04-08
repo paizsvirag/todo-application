@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Checkbox({disabled = false,checked,
+function Checkbox({disabled = false,checked,
     onChange}) {
 
     const handler = !disabled ? onChange : undefined;
@@ -13,5 +13,7 @@ export default function Checkbox({disabled = false,checked,
             checked={checked}
             onChange={handler}
         />
-    )
-}
+    );
+};
+
+export default Checkbox;

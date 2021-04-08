@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Checkbox from "../checkbox";
 
-export default function TodoItem({title}) {
+function TodoItem({title}) {
     const [checked, setChecked] = useState(false);
     const updateCheckbox = () => setChecked(!checked);
 
@@ -15,5 +15,6 @@ export default function TodoItem({title}) {
         <span>{title}</span>
         </div>
     )
-}
+};
 
+export default TodoItem;
