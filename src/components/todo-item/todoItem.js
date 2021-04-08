@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { Checkbox } from "./checkbox";
+import Checkbox from "../checkbox";
 
-export default function TodoItem() {
+export default function TodoItem({title}) {
     const [checked, setChecked] = useState(false);
-    const [title, setTitle] = useState('');
     const updateCheckbox = () => setChecked(!checked);
-    const updateTitle = () => setTitle(title);
 
     return(
         <div className="todo-item-wrapper">
@@ -14,14 +12,7 @@ export default function TodoItem() {
          checked={checked}
          onChange={updateCheckbox}
         />
-        <div className="">
-        <input
-            className="title-input"
-            type="text"
-            id="title-id"
-            onChange={updateTitle}
-        />
-        </div>
+        <span>{title}</span>
         </div>
     )
 }

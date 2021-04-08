@@ -9,7 +9,6 @@ export default function Checkbox({disabled = false,checked,
         <input
             className="checkbox-input"
             type="checkbox"
-            id="checkbox-id"
             disabled={disabled}
             checked={checked}
             onChange={handler}
