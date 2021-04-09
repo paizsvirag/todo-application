@@ -10,14 +10,19 @@ export default function TodoList() {
   useEffect(function updateDataToTodoItems() {
       setTodoItems(data);
     }, []);
-    
-    const updateTitle = () => setTitle(title);
 
-    const deleteTodoItem = (id) => {
-        //const newTodoItems = todoItems.filter()
+    const deleteTodoItem = (id, e) => {
+      e.preventDefault()
+        const newTodoItems = todoItems.filter((elements) => {
+          return elements.id !== id;
+        });
+
+        setTodoItems(newTodoItems)
     };
     
-  const addTodoItem = () => {};
+  const addTodoItem = () => {
+    //TODO: add new element to existing todo items and save to state 
+  };
 
   return (
     <div className="todo-list-wrapper">
@@ -28,7 +33,7 @@ export default function TodoList() {
               <TodoItem title={element.todoTitle} />
               <button
                 className="delete-button"
-                onClick={deleteTodoItem(element.id)}
+                onClick={(e) => deleteTodoItem(element.id,e)}
               >
                 &times;
               </button>
@@ -38,7 +43,7 @@ export default function TodoList() {
       ) : (
         <div></div>
       )}
-      <input className="todo-title-input" type="text" onChange={updateTitle} />
+      <input className="todo-title-input" type="text" onChange={(e) => addTodoItem(e)} />
     </div>
   );
 }
