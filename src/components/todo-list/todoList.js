@@ -4,7 +4,6 @@ import './todoList.css';
 import * as data from './../../data/data.json' 
 
 export default function TodoList() {
-    //TODO: todo list
     const [title, setTitle] = useState('');
     const updateTitle = () => setTitle(title);
     const [todoItems, setTodoItems] = useState([]);
@@ -13,19 +12,24 @@ export default function TodoList() {
         setTodoItems(data);
     },[] )
 
-    /**/
-    //const deleteItem = () => 
-    //TODO: list out todo items
+    const deleteTodoItem = (id) => {
+        const newTodoItems = todoItems.default.filter()
+    }
+
+    const addTodoItem = () => {
+         
+    }
+
     return(<div className="todo-list-wrapper">
         {todoItems.default ? todoItems.default.map((element) => {
             if(element.done) {
                 return (
-                <div className="todo-list-item-wrapper">
+                <div id={element.id} className="todo-list-item-wrapper">
                     <TodoItem title={element.todoTitle}/>
-                    <button className="delete-button" >&times;</button>
+                    <button className="delete-button" onClick={deleteTodoItem(element.id)}>&times;</button>
                 </div>)
             };
-            return null;
+            return (<div><p>There is no todo for today! Yay!</p></div>);
         }): <div></div>}
         <input
             className="todo-title-input"
