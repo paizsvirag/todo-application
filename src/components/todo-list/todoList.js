@@ -9,21 +9,24 @@ export default function TodoList() {
     const updateTitle = () => setTitle(title);
     const [todoItems, setTodoItems] = useState([]);
 
-    
+    useEffect( function updateDataToTodoItems(){
+        setTodoItems(data);
+    },[] )
 
+    /**/
     //const deleteItem = () => 
     //TODO: list out todo items
     return(<div className="todo-list-wrapper">
-        {data.map((element) => {
+        {todoItems.default ? todoItems.default.map((element) => {
             if(element.done) {
                 return (
                 <div className="todo-list-item-wrapper">
-                    <TodoItem />
+                    <TodoItem title={element.todoTitle}/>
                     <button className="delete-button" >&times;</button>
                 </div>)
             };
-            return;
-        })}
+            return null;
+        }): <div></div>}
         <input
             className="todo-title-input"
             type="text"
