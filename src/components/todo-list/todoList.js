@@ -23,39 +23,19 @@ export default function TodoList() {
     if (event.key === "Enter") {
       event.preventDefault();
       event.stopPropagation();
-      addTodoItem(event);
+      addTodoItem(event.target.value);
     }
   };
 
-  const addTodoItem = (e) => {
-    e.preventDefault();
-    const newItems = [];
-    const newId = Math.floor(Math.random() * 1000000 + 1);
-    newItems.push(todoItems);
+  const addTodoItem = (todoTitle) => {
+    const id = Math.floor(Math.random() * 1000000 + 1);
+    const newItem = {
+      id,
+      todoTitle,
+      done: false,
+    }
 
-    /*for(let i = 0; i < todoItems; i++) {
-      console.log('newItems')
-      if(newItems[i].id !== newId) {
-        newItems.push({
-          id: newId,
-          todoTitle: e.target.value,
-          done: false,
-        });
-      };
-    };*/
-    
-    todoItems.forEach(element => {
-      if(element.id !== newId) {
-        newItems.push({
-          id: newId,
-          todoTitle: e.target.value,
-          done: false,
-        });
-      };
-    });
-
-    console.log(newItems);
-    //TODO: add new element to existing todo items and save to state
+    console.log(newItem);
   };
 
   return (
@@ -78,6 +58,7 @@ export default function TodoList() {
       ) : (
         <div></div>
       )}
+      {/* TODO form element */}
       <input
         className="todo-title-input"
         type="text"
