@@ -4,24 +4,58 @@ import "./todoList.scss";
 import data from "./../../data/data.json";
 
 export default function TodoList() {
-  const [title, setTitle] = useState("");
   const [todoItems, setTodoItems] = useState([]);
-  
+
   useEffect(function updateDataToTodoItems() {
-      setTodoItems(data);
-    }, []);
+    setTodoItems(data);
+  }, []);
 
-    const deleteTodoItem = (id, e) => {
-      e.preventDefault()
-        const newTodoItems = todoItems.filter((elements) => {
-          return elements.id !== id;
+  const deleteTodoItem = (id, e) => {
+    e.preventDefault();
+    const newTodoItems = todoItems.filter((elements) => {
+      return elements.id !== id;
+    });
+
+    setTodoItems(newTodoItems);
+  };
+
+  const onKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      addTodoItem(event);
+    }
+  };
+
+  const addTodoItem = (e) => {
+    e.preventDefault();
+    const newItems = [];
+    const newId = Math.floor(Math.random() * 1000000 + 1);
+    newItems.push(todoItems);
+
+    /*for(let i = 0; i < todoItems; i++) {
+      console.log('newItems')
+      if(newItems[i].id !== newId) {
+        newItems.push({
+          id: newId,
+          todoTitle: e.target.value,
+          done: false,
         });
-
-        setTodoItems(newTodoItems)
-    };
+      };
+    };*/
     
-  const addTodoItem = () => {
-    //TODO: add new element to existing todo items and save to state 
+    todoItems.forEach(element => {
+      if(element.id !== newId) {
+        newItems.push({
+          id: newId,
+          todoTitle: e.target.value,
+          done: false,
+        });
+      };
+    });
+
+    console.log(newItems);
+    //TODO: add new element to existing todo items and save to state
   };
 
   return (
@@ -33,7 +67,7 @@ export default function TodoList() {
               <TodoItem title={element.todoTitle} />
               <button
                 className="delete-button"
-                onClick={(e) => deleteTodoItem(element.id,e)}
+                onClick={(e) => deleteTodoItem(element.id, e)}
               >
                 &times;
               </button>
@@ -43,7 +77,11 @@ export default function TodoList() {
       ) : (
         <div></div>
       )}
-      <input className="todo-title-input" type="text" onChange={(e) => addTodoItem(e)} />
+      <input
+        className="todo-title-input"
+        type="text"
+        onKeyDown={(e) => onKeyDown(e)}
+      />
     </div>
   );
 }
