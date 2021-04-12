@@ -60,6 +60,7 @@ export default function TodoList() {
 
   return (
     <div className="todo-list-wrapper">
+      <h1>ToDo List Application</h1>
       {todoItems ? (
         todoItems.map((element) => {
           return (
