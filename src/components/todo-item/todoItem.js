@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Checkbox from "../checkbox";
 
-function TodoItem({title}) {
+function TodoItem({title, isChecked}) {
     const [checked, setChecked] = useState(false);
     const updateCheckbox = () => setChecked(!checked);
 

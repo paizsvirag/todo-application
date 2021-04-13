@@ -5,7 +5,7 @@ import data from "./../../data/data.json";
 
 export default function TodoList() {
   const [todoItems, setTodoItems] = useState([]);
-  const [newItem, setNewItem] = useState({});
+  const [newTitle, setNewTitle] = useState("");
 
   useEffect(function () {
     setTodoItems(data);
@@ -22,50 +22,46 @@ export default function TodoList() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const itemList = [];
-    alert("This is the new todo item:" + newItem.todoTitle);
-    itemList.push(todoItems, newItem);
-    console.log(itemList);
-    setTodoItems(itemList);
+    addTodoItem();
+    setNewTitle('');
   };
 
-  const addTodoItem = (todoTitle) => {
+  const addTodoItem = () => {
     const id = Math.floor(Math.random() * 1000000 + 1);
     const newItems = {
       id,
-      todoTitle,
+      todoTitle: newTitle,
       done: false,
     };
+    const newItemsList = [...todoItems, newItems];
 
-    setNewItem(newItems);
+    setTodoItems(newItemsList);
   };
 
+  // TODO: checkboxes states changes
+  // TODO: unique title & id check
   return (
     <div className="todo-list-wrapper">
       <h1>ToDo List Application</h1>
-      {todoItems ? (
-        todoItems.map((element) => {
-          return (
-            <div id={element.id} className="todo-list-item-wrapper">
-              <TodoItem title={element.todoTitle} />
-              <button
-                className="delete-button"
-                onClick={(e) => deleteTodoItem(element.id, e)}
-              >
-                &times;
-              </button>
-            </div>
-          );
-        })
-      ) : (
-        <div></div>
-      )}
-      {/* TODO form element */}
+      {todoItems.map((element) => {
+        return (
+          <div id={element.id} className="todo-list-item-wrapper">
+            <TodoItem title={element.todoTitle} isChecked={element.done}/>
+            <button
+              className="delete-button"
+              onClick={(e) => deleteTodoItem(element.id, e)}
+            >
+              &times;
+            </button>
+          </div>
+        );
+      })}
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
           className="todo-title-input"
           type="text"
-          onChange={(e) => addTodoItem(e.target.value)}
+          onChange={(e) => setNewTitle(e.target.value)}
+          value={newTitle}
         />
         <input type="submit" value="Submit" />
       </form>
