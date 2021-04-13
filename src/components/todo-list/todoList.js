@@ -5,8 +5,9 @@ import data from "./../../data/data.json";
 
 export default function TodoList() {
   const [todoItems, setTodoItems] = useState([]);
+  const [newItem, setNewItem] = useState({});
 
-  useEffect(function updateDataToTodoItems() {
+  useEffect(function () {
     setTodoItems(data);
   }, []);
 
@@ -19,23 +20,24 @@ export default function TodoList() {
     setTodoItems(newTodoItems);
   };
 
-  const onKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      event.stopPropagation();
-      addTodoItem(event.target.value);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const itemList = [];
+    alert("This is the new todo item:" + newItem.todoTitle);
+    itemList.push(todoItems, newItem);
+    console.log(itemList);
+    setTodoItems(itemList);
   };
 
   const addTodoItem = (todoTitle) => {
     const id = Math.floor(Math.random() * 1000000 + 1);
-    const newItem = {
+    const newItems = {
       id,
       todoTitle,
       done: false,
-    }
+    };
 
-    console.log(newItem);
+    setNewItem(newItems);
   };
 
   return (
@@ -59,11 +61,14 @@ export default function TodoList() {
         <div></div>
       )}
       {/* TODO form element */}
-      <input
-        className="todo-title-input"
-        type="text"
-        onKeyDown={(e) => onKeyDown(e)}
-      />
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <input
+          className="todo-title-input"
+          type="text"
+          onChange={(e) => addTodoItem(e.target.value)}
+        />
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   );
 }
