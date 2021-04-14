@@ -6,6 +6,7 @@ import data from "./../../data/data.json";
 export default function TodoList() {
   const [todoItems, setTodoItems] = useState([]);
   const [newTitle, setNewTitle] = useState("");
+  const [checked, setChecked] = useState(false);
 
   useEffect(function () {
     setTodoItems(data);
@@ -23,7 +24,7 @@ export default function TodoList() {
   const handleSubmit = (e) => {
     e.preventDefault();
     addTodoItem();
-    setNewTitle('');
+    setNewTitle("");
   };
 
   const addTodoItem = () => {
@@ -33,11 +34,31 @@ export default function TodoList() {
       todoTitle: newTitle,
       done: false,
     };
+
     const newItemsList = [...todoItems, newItems];
 
     setTodoItems(newItemsList);
   };
 
+  const handleCheckbox = (id, e) => {
+    setChecked(!checked);
+    changeStatus(id);
+  };
+
+  const changeStatus = (currentId) => {
+    const checkedTodoItems = todoItems.filter((elements) => {
+      let updatableStatus = {};
+      if (elements.id === currentId) {
+        updatableStatus = {
+          id: elements.id,
+          todoTitle: elements.todoTitle,
+          done: checked,
+        };
+      }
+      return updatableStatus;
+    });
+    console.log(checkedTodoItems);
+  };
   // TODO: checkboxes states changes
   // TODO: unique title & id check
   return (
@@ -46,7 +67,11 @@ export default function TodoList() {
       {todoItems.map((element) => {
         return (
           <div id={element.id} className="todo-list-item-wrapper">
-            <TodoItem title={element.todoTitle} isChecked={element.done}/>
+            <TodoItem
+              title={element.todoTitle}
+              isChecked={element.done}
+              updateCheckbox={(e) => handleCheckbox(element.id, e)}
+            />
             <button
               className="delete-button"
               onClick={(e) => deleteTodoItem(element.id, e)}
@@ -56,6 +81,7 @@ export default function TodoList() {
           </div>
         );
       })}
+      ;
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
           className="todo-title-input"
