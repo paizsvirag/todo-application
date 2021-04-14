@@ -1,10 +1,10 @@
-import ProgressBar from './components/progress-bar/progress-bar';
 import './App.css';
+import TodoList from './components/todo-list/todoList';
 
 function App() {
   return (
     <div className="App">
-      <ProgressBar percentage={-50}/>
+      <TodoList />
     </div>
   );
 }
