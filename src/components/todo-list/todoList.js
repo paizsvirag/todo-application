@@ -6,7 +6,6 @@ import data from "./../../data/data.json";
 export default function TodoList() {
   const [todoItems, setTodoItems] = useState([]);
   const [newTitle, setNewTitle] = useState("");
-  const [checked, setChecked] = useState(false);
 
   useEffect(function () {
     setTodoItems(data);
@@ -40,24 +39,14 @@ export default function TodoList() {
     setTodoItems(newItemsList);
   };
 
-  const handleCheckbox = (id, e) => {
-    setChecked(!checked);
-    changeStatus(id);
-  };
+  const handleCheckbox = (currentId) => {
+    const newTodoItems = todoItems.map(({ id, todoTitle, done }) => ({
+      id,
+      todoTitle,
+      done: id === currentId ? !done : done,
+    }));
 
-  const changeStatus = (currentId) => {
-    const checkedTodoItems = todoItems.filter((elements) => {
-      let updatableStatus = {};
-      if (elements.id === currentId) {
-        updatableStatus = {
-          id: elements.id,
-          todoTitle: elements.todoTitle,
-          done: checked,
-        };
-      }
-      return updatableStatus;
-    });
-    console.log(checkedTodoItems);
+    setTodoItems(newTodoItems);
   };
   // TODO: checkboxes states changes
   // TODO: unique title & id check
