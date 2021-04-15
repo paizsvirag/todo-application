@@ -26,6 +26,17 @@ export default function TodoList() {
     setNewTitle("");
   };
 
+  const titleValidation = (newId) => {
+    const oldIdExists = todoItems.includes(({id}) => id === newId);
+    const oldTitleExists = todoItems.includes(({todoTitle}) => todoTitle === newTitle);
+    console.log(oldIdExists,oldTitleExists)
+    if(oldIdExists || oldTitleExists) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const addTodoItem = () => {
     const id = Math.floor(Math.random() * 1000000 + 1);
     const newItems = {
@@ -34,9 +45,11 @@ export default function TodoList() {
       done: false,
     };
 
-    const newItemsList = [...todoItems, newItems];
+    if(titleValidation(id)) {
+      const newItemsList = [...todoItems, newItems];
+      setTodoItems(newItemsList);
+    }
 
-    setTodoItems(newItemsList);
   };
 
   const handleCheckbox = (currentId) => {
@@ -48,7 +61,6 @@ export default function TodoList() {
 
     setTodoItems(newTodoItems);
   };
-  // TODO: checkboxes states changes
   // TODO: unique title & id check
   return (
     <div className="todo-list-wrapper">
@@ -70,7 +82,6 @@ export default function TodoList() {
           </div>
         );
       })}
-      ;
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
           className="todo-title-input"
