@@ -26,11 +26,17 @@ export default function TodoList() {
     setNewTitle("");
   };
 
+  const addSubToDoItem = () => {
+
+  };
+
   const titleValidation = (newId) => {
-    const oldIdExists = todoItems.includes(({id}) => id === newId);
-    const oldTitleExists = todoItems.includes(({todoTitle}) => todoTitle === newTitle);
-    console.log(oldIdExists,oldTitleExists)
-    if(oldIdExists || oldTitleExists) {
+    const oldIdExists = todoItems.includes(({ id }) => id === newId);
+    const oldTitleExists = todoItems.includes(
+      ({ todoTitle }) => todoTitle === newTitle
+    );
+    //TODO: fix this
+    if (oldIdExists || oldTitleExists) {
       return false;
     } else {
       return true;
@@ -45,12 +51,12 @@ export default function TodoList() {
       done: false,
     };
 
-    if(titleValidation(id)) {
+    if (titleValidation(id)) {
       const newItemsList = [...todoItems, newItems];
       setTodoItems(newItemsList);
     }
-
   };
+
 
   const handleCheckbox = (currentId) => {
     const newTodoItems = todoItems.map(({ id, todoTitle, done }) => ({
@@ -63,16 +69,19 @@ export default function TodoList() {
   };
   // TODO: unique title & id check
   return (
-    <div className="todo-list-wrapper">
+    <div className={"todo-list-wrapper"}>
       <h1>ToDo List Application</h1>
       {todoItems.map((element) => {
         return (
-          <div id={element.id} className="todo-list-item-wrapper">
+          <div key={element.id} id={element.id} className={`todo-list-item-wrapper-${element.done}`}>
             <TodoItem
               title={element.todoTitle}
               isChecked={element.done}
               updateCheckbox={(e) => handleCheckbox(element.id, e)}
             />
+            <button 
+              className="subtask-button"
+              onClick={() => addSubToDoItem()}>Add</button>
             <button
               className="delete-button"
               onClick={(e) => deleteTodoItem(element.id, e)}
